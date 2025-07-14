@@ -39,7 +39,7 @@ print(f"You currently have ${MONEY} to bet")
 while playAgain:
     bet = int(input("\nHow much would you like to bet?"))
     horseBetting = int(input("Which horse would you like to bet on (1-6)?"))
-    if bet >> MONEY:
+    if bet > MONEY:
         print("You cannot bet more than you have!")
         break
     if horseBetting not in [1, 2, 3, 4, 5, 6]:
