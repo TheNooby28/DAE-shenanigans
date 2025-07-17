@@ -21,7 +21,7 @@ def HorseAnimation(): #Runs the horse animation which is defined in this functio
             positions[i] += move
             print(f"{horseNames[i]}: " + "█" * positions[i])
 
-        time.sleep(0.2)
+        time.sleep(0.4)
 
     winnerIndex = positions.index(max(positions))
     print(f"\n{horseNames[winnerIndex]} won the race!")
