@@ -1,4 +1,6 @@
-import os, time, random, platform
+import os, time, random, platform, hashlib
+
+SECRET_KEY = "dontcheatbleh312"
 
 def ClearScreen(): #Clears the terminal screen for the animation
     if platform.system() == "Windows": #I have a windows computer at home and I want to make sure it's able to be run on either
@@ -22,25 +24,38 @@ def HorseAnimation(): #Runs the horse animation which is defined in this functio
         time.sleep(0.2)
 
     winnerIndex = positions.index(max(positions))
-    print(f"\n {horseNames[winnerIndex]} won the race!")
+    print(f"\n{horseNames[winnerIndex]} won the race!")
     return winnerIndex
+
+def generateHash(balance): #Generates the secret to avoid tampering
+    return hashlib.sha256((str(balance) + SECRET_KEY).encode()).hexdigest()
 
 def loadBalance(): #Loads the balance fro mthe HorseRacingMoney.txt file 
     try:
         with open("HorseRacingMoney.txt", "r") as file:
-            beforeSaveMoney = int(file.read())
-            if beforeSaveMoney == 0:
+            lines = file.readlines()
+            if len(lines) != 2:
+                raise ValueError("Money file is malformed")
+            balance = int(lines[0].strip())
+            savedHash = lines[1].strip()
+
+            if savedHash != generateHash(balance):
+                print("Tampering detected! Setting your balance back to 100.")
+                return 100
+            if balance == 0:
                 return 100
             else:
-                return beforeSaveMoney
-    except FileNotFoundError:
+                return balance
+    except (FileNotFoundError, ValueError):
         with open("HorseRacingMoney.txt", "w") as file:
-            file.write("500")
+            file.write("500\n")
+            file.write(generateHash(100))
         return 500
 
 def saveBalance(): #Saves the balance of the user (used many times to make sure the user doesn't leave when their horse is losing)
     with open("HorseRacingMoney.txt", "w") as file:
-        file.write(str(MONEY))
+        file.write(str(MONEY) + "\n")
+        file.write(generateHash(MONEY))
 
 MONEY = loadBalance()
 playAgain = True
@@ -69,5 +84,9 @@ while playAgain:
         if MONEY == 0:
             print("Ouch, out of money. Good luck next time!")
             break
+    playAgainAsk = input("Would you like to play again?")
+    if playAgainAsk.lower() in ["yes", "y"]:
+        playAgain = True
+    else:
+        playAgain = False
 
-    
