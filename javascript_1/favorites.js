@@ -1,4 +1,5 @@
 const favoritesList = document.getElementById("favorites-list");
+const totalQuotes = document.getElementById("total-quotes");
 
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -14,6 +15,8 @@ function removeFavorite(index) {
 
 function renderFavorites() {
     favoritesList.innerHTML = "";
+
+    totalQuotes.textContent = `Total Quotes: ${favorites.length}`
 
     favorites.forEach((q, index) => {
         const li = document.createElement("li");
