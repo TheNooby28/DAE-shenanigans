@@ -2,6 +2,7 @@ const quoteText = document.getElementById("quote");
 const authorText = document.getElementById("author");
 const button = document.getElementById("get-quote");
 const favoriteButton = document.getElementById("favorite-quote");
+let quoteCount = parseInt(localStorage.getItem("quoteCount")) || 0;
 
 button.addEventListener("click", getQuote);
 
@@ -19,6 +20,9 @@ function getQuote() {
         const quote = data[0];
         quoteText.textContent = `"${quote.quote}"`;
         authorText.textContent = `- ${quote.author}`;
+
+        quoteCount++;
+        localStorage.setItem("quoteCount", quoteCount);
 
         favoriteButton.disabled = false;
     })
