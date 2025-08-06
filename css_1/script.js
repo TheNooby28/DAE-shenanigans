@@ -5,7 +5,7 @@ const favoriteButton = document.getElementById("favorite-quote");
 let quoteCount = parseInt(localStorage.getItem("quoteCount")) || 0;
 
 // UPDATE THIS TO YOUR BACKEND URL (Render, Railway, etc)
-const BACKEND_URL = "https://your-backend-name.onrender.com/quote";
+const BACKEND_URL = "https://quotegeneratorserver.onrender.com/quote";
 
 button.addEventListener("click", getQuote);
 
