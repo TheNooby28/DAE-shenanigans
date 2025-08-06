@@ -10,6 +10,9 @@ app.use(cors());
 
 app.get('/quote', async (req, res) => {
     try {
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        console.log(`Sending quote to IP: ${ip}`)
+
         const response = await axios.get('https://api.api-ninjas.com/v1/quotes', {
             headers: {
                 'X-Api-Key': process.env.API_KEY
