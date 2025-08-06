@@ -2,3 +2,7 @@ html_1/config.js
 css_1/config.js
 javascript_1/config.js
 docs/config.js
+html_1/server/.env
+css_1/server/.env
+javascript_1/server/.env
+docs/server/.env

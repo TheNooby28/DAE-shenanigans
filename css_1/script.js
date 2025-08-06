@@ -4,33 +4,31 @@ const button = document.getElementById("get-quote");
 const favoriteButton = document.getElementById("favorite-quote");
 let quoteCount = parseInt(localStorage.getItem("quoteCount")) || 0;
 
+// UPDATE THIS TO YOUR BACKEND URL (Render, Railway, etc)
+const BACKEND_URL = "https://your-backend-name.onrender.com/quote";
+
 button.addEventListener("click", getQuote);
 
 function getQuote() {
-    fetch("https://api.api-ninjas.com/v1/quotes", {
-        headers: {
-            "X-Api-Key": API_KEY
-        }
-    })
-    .then(res => {
-        if (!res.ok) throw new Error("Failed to get quote!");
-        return res.json();
-    })
-    .then(data => {
-        const quote = data[0];
-        quoteText.textContent = `"${quote.quote}"`;
-        authorText.textContent = `- ${quote.author}`;
+    fetch(BACKEND_URL)
+        .then(res => {
+            if (!res.ok) throw new Error("Failed to get quote!");
+            return res.json();
+        })
+        .then(data => {
+            quoteText.textContent = `"${data.quote}"`;
+            authorText.textContent = `- ${data.author}`;
 
-        quoteCount++;
-        localStorage.setItem("quoteCount", quoteCount);
+            quoteCount++;
+            localStorage.setItem("quoteCount", quoteCount);
 
-        favoriteButton.disabled = false;
-    })
-    .catch(err => {
-        console.error(err);
-        quoteText.textContent = "Failed to fetch quote!";
-        authorText.textContent = "";
-    })
+            favoriteButton.disabled = false;
+        })
+        .catch(err => {
+            console.error(err);
+            quoteText.textContent = "Failed to fetch quote!";
+            authorText.textContent = "";
+        });
 }
 
 favoriteButton.addEventListener("click", saveFavoriteQuote);
@@ -60,6 +58,6 @@ function saveFavoriteQuote() {
         localStorage.setItem("favorites", JSON.stringify(favorites));
         alert("Quote added to favorites!");
     } else {
-        alert("You have already favorited this!")
+        alert("You have already favorited this!");
     }
 }
