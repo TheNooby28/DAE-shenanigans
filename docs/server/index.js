@@ -31,4 +31,6 @@ app.listen(port, () => {
 
 app.get('/health', (req, res) => {
     res.json({ status: "ok" });
+    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    console.log(`Health checked from ip: ${ip}`)
 });
