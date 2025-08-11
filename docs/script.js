@@ -3,6 +3,7 @@ const authorText = document.getElementById("author");
 const button = document.getElementById("get-quote");
 const favoriteButton = document.getElementById("favorite-quote");
 let quoteCount = parseInt(localStorage.getItem("quoteCount")) || 0;
+const loadingElement = document.getElementById("loading");
 
 // UPDATE THIS TO YOUR BACKEND URL (Render, Railway, etc)
 const BACKEND_URL = "https://quotegeneratorserver.onrender.com/quote";
@@ -10,6 +11,11 @@ const BACKEND_URL = "https://quotegeneratorserver.onrender.com/quote";
 button.addEventListener("click", getQuote);
 
 function getQuote() {
+    loadingElement.style.display = "block";
+    quoteText.style.display = "none";
+    authorText.style.display = "none";
+    favoriteButton.disabled = true
+
     fetch(BACKEND_URL)
         .then(res => {
             if (!res.ok) throw new Error("Failed to get quote!");
@@ -28,6 +34,11 @@ function getQuote() {
             console.error(err);
             quoteText.textContent = "Failed to fetch quote!";
             authorText.textContent = "";
+        })
+        .finally(() => {
+            loadingElement.style.display = "none";
+            quoteText.style.display = "block";
+            authorText.style.display = "block";
         });
 }
 
