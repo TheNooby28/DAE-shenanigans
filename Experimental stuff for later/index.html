@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="style.css" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <title>Quote Generator</title>
+</head>
+<body>
+    <header>
+        <img id="logoImg" src="quoteIcon.png" alt="Quote Icon Image" width="40" height="40"/>
+        <h1><u>Quote Generator</u></h1>
+    </header>
+    <button id="darkModeToggle">🌙</button>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="favorites.html">Favorites</a>
+    </nav>
+    <main>
+        <div id="quote-container" class="quote-section">
+            <p id="quote">Press the button to recieve a quote!</p>
+            <p id="author"></p>
+            <p id="loading" style="display:none;">Loading<span id="dots"></span></p>
+        </div>
+        <div id="button-container">
+            <button id="get-quote">New Quote</button>
+            <button id="favorite-quote" disabled>Favorite</button>
+        </div>
+
+        <script src="script.js"></script>
+
+    </main>
+    <footer>
+        <em>“Quotes are just stolen thoughts with better fonts.”</em>
+    </footer>
+</body>
+</html>
